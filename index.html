@@ -1,0 +1,2076 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <title>Planear es anticiparse al futuro</title>
+    <style>
+      :root {
+        --paper: #f5f1e8;
+        --ink: #153b48;
+        --accent: #b84d36;
+        --green: #28786e;
+        --soft: #e6e2d8;
+        --muted: #50646a;
+        --line: #c7d0cd;
+        --white: #fffdf8;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font:
+          18px/1.48 Arial,
+          Helvetica,
+          sans-serif;
+      }
+      button,
+      input,
+      select,
+      textarea {
+        font: inherit;
+      }
+      button,
+      a,
+      input {
+        touch-action: manipulation;
+      }
+      button {
+        cursor: pointer;
+      }
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 4px;
+      }
+      button {
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        background: transparent;
+        color: var(--ink);
+        padding: 10px 17px;
+      }
+      button:hover {
+        background: #e4e9e5;
+      }
+      button:disabled {
+        opacity: 0.35;
+        cursor: default;
+      }
+      button.primary {
+        background: var(--ink);
+        color: var(--white);
+        border-color: var(--ink);
+      }
+      button.primary:hover {
+        background: #235362;
+      }
+      button.active,
+      button[aria-selected="true"] {
+        background: var(--ink);
+        color: var(--white);
+        border-color: var(--ink);
+      }
+      a {
+        color: var(--ink);
+        text-underline-offset: 3px;
+      }
+      p {
+        margin: 0 0 16px;
+      }
+      h1,
+      h2,
+      h3 {
+        line-height: 1.13;
+        margin: 0 0 22px;
+        font-weight: 600;
+      }
+      h1,
+      h2 {
+        font-family: Georgia, "Times New Roman", serif;
+      }
+      h1 {
+        font-size: clamp(45px, 6vw, 80px);
+        letter-spacing: -2.7px;
+      }
+      h2 {
+        font-size: clamp(32px, 3.5vw, 48px);
+        letter-spacing: -1.25px;
+      }
+      h3 {
+        font-size: 24px;
+      }
+      strong {
+        font-weight: 700;
+      }
+      .small {
+        font-size: 15px;
+        line-height: 1.45;
+      }
+      .muted {
+        color: var(--muted);
+      }
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 2.5px;
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--accent);
+        margin: 0 0 20px;
+      }
+      .lead {
+        font-size: 22px;
+        line-height: 1.5;
+        max-width: 850px;
+      }
+      .source {
+        font-size: 13px;
+        color: var(--muted);
+        margin-top: 22px;
+        line-height: 1.5;
+      }
+      .source a {
+        color: inherit;
+      }
+      .tag {
+        display: inline-block;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 20px;
+        color: var(--muted);
+      }
+      header {
+        height: 66px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 4vw;
+        border-bottom: 1px solid var(--line);
+        gap: 20px;
+      }
+      header .brand {
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0.8px;
+      }
+      header .tools {
+        display: flex;
+        gap: 8px;
+      }
+      header button {
+        font-size: 13px;
+        padding: 7px 12px;
+      }
+      .progress {
+        height: 3px;
+        background: var(--soft);
+      }
+      #progress {
+        height: 100%;
+        background: var(--accent);
+        width: 0;
+        transition: width 0.4s;
+      }
+      main {
+        max-width: 1420px;
+        margin: auto;
+        padding: 38px 5vw 30px;
+        min-height: calc(100vh - 141px);
+      }
+      .slide {
+        animation: enter 0.45s ease both;
+      }
+      .split {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 52px;
+        align-items: start;
+      }
+      .split.wide-left {
+        grid-template-columns: 1.15fr 0.85fr;
+      }
+      .hero {
+        display: grid;
+        grid-template-columns: 1.35fr 0.65fr;
+        gap: 55px;
+        align-items: center;
+        min-height: 480px;
+      }
+      .hero h1 {
+        max-width: 850px;
+      }
+      .hero .deck-meta {
+        margin-top: 28px;
+        font-size: 15px;
+        color: var(--muted);
+      }
+      .hero-steps {
+        border-left: 1px solid var(--line);
+        padding-left: 36px;
+      }
+      .hero-step {
+        padding: 23px 0;
+        border-bottom: 1px solid var(--line);
+        animation: enter 0.7s both;
+      }
+      .hero-step:nth-child(2) {
+        animation-delay: 0.15s;
+      }
+      .hero-step:nth-child(3) {
+        animation-delay: 0.3s;
+      }
+      .hero-step b {
+        display: block;
+        font-size: 22px;
+      }
+      .hero-step span {
+        display: block;
+        color: var(--muted);
+        font-size: 16px;
+        margin-top: 5px;
+      }
+      .hero-step em {
+        font-size: 40px;
+        color: var(--accent);
+        font-family: Georgia, serif;
+        font-style: normal;
+        float: right;
+      }
+      .route {
+        display: grid;
+        gap: 0;
+      }
+      .route button {
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        text-align: left;
+        padding: 20px 0;
+        display: grid;
+        grid-template-columns: 70px 1fr;
+        gap: 20px;
+        border-radius: 0;
+      }
+      .route button:hover {
+        background: transparent;
+        color: var(--accent);
+      }
+      .route .num {
+        font:
+          42px Georgia,
+          serif;
+        color: var(--accent);
+      }
+      .route b {
+        font-size: 23px;
+        display: block;
+        margin-bottom: 7px;
+      }
+      .route small {
+        font-size: 17px;
+        line-height: 1.4;
+        display: block;
+        max-width: 890px;
+      }
+      .callout {
+        border-left: 4px solid var(--accent);
+        padding: 7px 0 7px 22px;
+        margin-top: 24px;
+      }
+      .callout p {
+        margin: 0;
+      }
+      .flat-list {
+        display: grid;
+        gap: 22px;
+      }
+      .flat-list h3 {
+        margin-bottom: 7px;
+      }
+      .number {
+        font:
+          50px Georgia,
+          serif;
+        color: var(--accent);
+      }
+      .chain {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+        margin: 25px 0;
+      }
+      .chain button {
+        position: relative;
+        min-height: 108px;
+        border: 0;
+        border-bottom: 3px solid var(--line);
+        border-radius: 0;
+        text-align: left;
+        padding: 16px 8px;
+      }
+      .chain button.active {
+        background: transparent;
+        color: var(--ink);
+        border-color: var(--accent);
+      }
+      .chain button span {
+        display: block;
+        font-size: 13px;
+        color: var(--accent);
+        margin-bottom: 10px;
+      }
+      .chain button b {
+        font-size: 20px;
+      }
+      .reveal {
+        min-height: 130px;
+        border-top: 1px solid var(--line);
+        padding-top: 24px;
+      }
+      .reveal h3 {
+        margin-bottom: 12px;
+      }
+      .tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 20px 0 27px;
+      }
+      .tabs button {
+        font-size: 16px;
+      }
+      .case-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 46px;
+      }
+      .case-grid .declaration {
+        display: grid;
+        gap: 17px;
+      }
+      .declaration b {
+        display: block;
+        font-size: 15px;
+        color: var(--accent);
+        margin-bottom: 4px;
+      }
+      .declaration p {
+        margin: 0;
+        font-size: 18px;
+      }
+      .case-grid aside {
+        border-left: 1px solid var(--line);
+        padding-left: 30px;
+      }
+      .case-grid aside h3 {
+        font-size: 25px;
+      }
+      .case-grid aside .small {
+        font-size: 14px;
+      }
+      .bars {
+        margin: 24px 0;
+      }
+      .barrow {
+        margin: 22px 0;
+      }
+      .barlabel {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 8px;
+        font-size: 16px;
+      }
+      .barlabel b {
+        font-size: 24px;
+      }
+      .track {
+        height: 34px;
+        background: #dedfd7;
+        overflow: hidden;
+      }
+      .bar {
+        height: 100%;
+        width: var(--value);
+        background: var(--green);
+        transform-origin: left;
+        animation: grow 0.85s ease both;
+      }
+      .bar.target {
+        background: var(--accent);
+      }
+      .axis {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: var(--muted);
+        border-top: 1px solid var(--line);
+        padding-top: 6px;
+      }
+      .stat {
+        font:
+          72px/1 Georgia,
+          serif;
+        letter-spacing: -3px;
+        color: var(--accent);
+        margin-bottom: 8px;
+      }
+      .label {
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1.1px;
+        color: var(--muted);
+      }
+      .detail-toggle {
+        font-size: 14px;
+        padding: 8px 12px;
+        margin-top: 8px;
+      }
+      details {
+        border-bottom: 1px solid var(--line);
+        padding: 12px 0;
+        font-size: 16px;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: bold;
+        list-style-position: outside;
+        margin-left: 20px;
+      }
+      details p {
+        margin: 10px 0 4px 20px;
+      }
+      details[open] summary {
+        color: var(--accent);
+      }
+      .tool-layout {
+        display: grid;
+        grid-template-columns: 300px 1fr;
+        gap: 48px;
+      }
+      .tool-menu {
+        display: grid;
+        gap: 8px;
+      }
+      .tool-menu button {
+        text-align: left;
+        font-size: 17px;
+      }
+      .tool-detail {
+        padding: 8px 0;
+      }
+      .tool-detail h3 {
+        font:
+          32px Georgia,
+          serif;
+      }
+      .tool-detail .number {
+        font-size: 64px;
+      }
+      .tool-detail p {
+        max-width: 750px;
+      }
+      .phase-row {
+        display: flex;
+        gap: 20px;
+        margin-top: 28px;
+        padding-top: 18px;
+        border-top: 1px solid var(--line);
+        font-size: 15px;
+      }
+      .phase-row b {
+        color: var(--accent);
+      }
+      .matrix {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+      .matrix button {
+        text-align: left;
+        padding: 18px;
+        border: 1px solid var(--line);
+        min-height: 148px;
+      }
+      .matrix button strong {
+        font:
+          32px Georgia,
+          serif;
+        color: var(--accent);
+        display: block;
+      }
+      .matrix button.active strong {
+        color: #efc6a3;
+      }
+      .matrix button b {
+        display: block;
+        margin: 3px 0 8px;
+      }
+      .matrix button small {
+        display: block;
+        font-size: 15px;
+        line-height: 1.4;
+      }
+      .strategy-output {
+        background: var(--ink);
+        color: var(--white);
+        padding: 30px;
+        min-height: 200px;
+      }
+      .strategy-output h3 {
+        font:
+          29px Georgia,
+          serif;
+      }
+      .strategy-output p {
+        font-size: 21px;
+      }
+      .strategy-output .eyebrow {
+        color: #efc6a3;
+      }
+      .scenario-controls {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 24px 0;
+      }
+      .scenario-detail {
+        display: grid;
+        grid-template-columns: 0.65fr 1.35fr;
+        gap: 40px;
+        border-top: 1px solid var(--line);
+        padding-top: 28px;
+      }
+      .signal {
+        font:
+          44px/1.12 Georgia,
+          serif;
+        color: var(--accent);
+      }
+      .scenario-detail .flat-list {
+        gap: 18px;
+      }
+      .scenario-detail h3 {
+        font-size: 19px;
+        margin-bottom: 6px;
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        font-size: 17px;
+      }
+      th {
+        text-align: left;
+        font-size: 13px;
+        text-transform: uppercase;
+        letter-spacing: 0.6px;
+        color: var(--muted);
+        border-bottom: 2px solid var(--ink);
+        padding: 12px 7px;
+      }
+      td {
+        padding: 14px 7px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: top;
+      }
+      td.num,
+      th.num {
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+      .weights {
+        display: grid;
+        grid-template-columns: 35fr 30fr 20fr 15fr;
+        gap: 4px;
+        margin: 24px 0 8px;
+      }
+      .weights div {
+        padding: 12px 10px;
+        background: var(--ink);
+        color: var(--white);
+        min-width: 0;
+      }
+      .weights div:nth-child(2) {
+        background: #31616a;
+      }
+      .weights div:nth-child(3) {
+        background: #477b7f;
+      }
+      .weights div:nth-child(4) {
+        background: #5b8586;
+      }
+      .weights strong {
+        font-size: 29px;
+        display: block;
+      }
+      .weights span {
+        font-size: 13px;
+      }
+      .formula {
+        font:
+          22px Georgia,
+          serif;
+        margin: 20px 0;
+      }
+      .scorecell {
+        font-weight: 700;
+        color: var(--accent);
+      }
+      .simulator {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 45px;
+      }
+      .budget-control label {
+        display: block;
+        font-size: 15px;
+      }
+      .budget-control output {
+        display: block;
+        font:
+          54px/1.1 Georgia,
+          serif;
+        margin: 6px 0 14px;
+        color: var(--accent);
+      }
+      input[type="range"] {
+        width: 100%;
+        accent-color: var(--accent);
+        height: 30px;
+        cursor: pointer;
+      }
+      .range-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      .cost-row {
+        display: grid;
+        grid-template-columns: 24px 1fr 70px;
+        gap: 10px;
+        align-items: center;
+        margin: 15px 0;
+        font-size: 14px;
+      }
+      .cost-row .track {
+        height: 22px;
+      }
+      .cost-row .bar {
+        background: #b9c6c1;
+        animation: none;
+        transition: background 0.4s;
+      }
+      .cost-row.selected .bar {
+        background: var(--green);
+      }
+      .cost-row.selected strong {
+        color: var(--green);
+      }
+      .selection {
+        border-left: 1px solid var(--line);
+        padding-left: 32px;
+      }
+      .selection h3 {
+        font:
+          36px Georgia,
+          serif;
+        margin-bottom: 16px;
+      }
+      .selection .chosen {
+        font-size: 21px;
+      }
+      .totals {
+        display: flex;
+        gap: 35px;
+        margin: 22px 0;
+      }
+      .totals strong {
+        display: block;
+        font:
+          38px Georgia,
+          serif;
+        color: var(--accent);
+      }
+      .totals span {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .cost-name {
+        font-size: 13px;
+      }
+      .notice {
+        font-size: 14px;
+        background: #e9e5d9;
+        padding: 12px 16px;
+        margin-top: 18px;
+      }
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+        margin: 30px 0;
+      }
+      .timeline > div {
+        border-top: 3px solid var(--green);
+        padding-top: 18px;
+      }
+      .timeline h3 {
+        font-size: 20px;
+      }
+      .timeline .owner {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      .timeline p {
+        font-size: 17px;
+      }
+      .monitor {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 45px;
+        border-top: 1px solid var(--line);
+        padding-top: 20px;
+      }
+      .quiz-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 45px;
+      }
+      .quiz-question {
+        font:
+          31px/1.25 Georgia,
+          serif;
+      }
+      .answers {
+        display: grid;
+        gap: 12px;
+      }
+      .answers button {
+        text-align: left;
+        display: grid;
+        grid-template-columns: 25px 1fr;
+        gap: 10px;
+        padding: 17px;
+        font-size: 17px;
+      }
+      .answers button.correct {
+        background: #e1eee6;
+        border-color: var(--green);
+      }
+      .answers button.incorrect {
+        background: #f5ded7;
+        border-color: var(--accent);
+      }
+      .feedback {
+        min-height: 104px;
+        margin-top: 18px;
+        font-size: 17px;
+      }
+      .quiz-nav {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+      .quiz-nav button {
+        padding: 7px 13px;
+        font-size: 14px;
+      }
+      .refs {
+        display: grid;
+        gap: 19px;
+        max-width: 1100px;
+      }
+      .ref {
+        font-size: 17px;
+        padding-left: 25px;
+        text-indent: -25px;
+        margin: 0;
+      }
+      .ref a {
+        display: block;
+        font-size: 13px;
+        overflow-wrap: anywhere;
+        margin-top: 3px;
+        text-indent: 0;
+      }
+      .closing {
+        max-width: 1000px;
+      }
+      .closing .lead {
+        font-size: 25px;
+      }
+      .reflection {
+        font:
+          32px/1.3 Georgia,
+          serif;
+        color: var(--accent);
+        margin-top: 35px;
+      }
+      .note-list {
+        display: grid;
+        gap: 22px;
+        max-width: 1100px;
+      }
+      .note-list p {
+        font-size: 18px;
+      }
+      .note-list strong {
+        color: var(--accent);
+      }
+      footer {
+        height: 72px;
+        border-top: 1px solid var(--line);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 4vw;
+        gap: 20px;
+      }
+      footer .nav {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      footer .count {
+        font-size: 14px;
+        color: var(--muted);
+        min-width: 66px;
+        text-align: center;
+      }
+      footer button {
+        font-size: 14px;
+        padding: 9px 15px;
+      }
+      #sectionLabel {
+        font-size: 14px;
+        color: var(--muted);
+      }
+      dialog {
+        border: 1px solid var(--line);
+        border-radius: 6px;
+        background: var(--paper);
+        color: var(--ink);
+        padding: 30px;
+        max-width: 920px;
+        width: 90%;
+        max-height: 85vh;
+      }
+      dialog::backdrop {
+        background: #09283299;
+      }
+      .dialog-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+      .dialog-head h3 {
+        margin: 0;
+        font:
+          30px Georgia,
+          serif;
+      }
+      .dialog-head button {
+        font-size: 14px;
+      }
+      .index-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .index-grid button {
+        text-align: left;
+        font-size: 15px;
+        padding: 11px 13px;
+      }
+      .index-grid span {
+        color: var(--accent);
+        display: inline-block;
+        width: 30px;
+      }
+      #notesBody p {
+        font-size: 19px;
+        line-height: 1.65;
+      }
+      #notesBody .source {
+        font-size: 14px;
+      }
+      .quiet {
+        animation: none !important;
+        transition: none !important;
+      }
+      .no-motion * {
+        animation: none !important;
+        transition: none !important;
+      }
+      @keyframes enter {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      @keyframes grow {
+        from {
+          transform: scaleX(0);
+        }
+        to {
+          transform: scaleX(1);
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+      @media (max-width: 850px) {
+        body {
+          font-size: 17px;
+        }
+        header {
+          padding: 0 20px;
+        }
+        .brand {
+          max-width: 150px;
+        }
+        .hide-small {
+          display: none;
+        }
+        main {
+          padding: 28px 24px;
+          min-height: calc(100vh - 141px);
+        }
+        h1 {
+          letter-spacing: -1.6px;
+        }
+        .hero,
+        .split,
+        .case-grid,
+        .simulator,
+        .quiz-grid,
+        .scenario-detail,
+        .monitor {
+          grid-template-columns: 1fr;
+          gap: 28px;
+        }
+        .hero {
+          min-height: 0;
+        }
+        .hero-steps {
+          display: flex;
+          gap: 20px;
+          border-left: 0;
+          border-top: 1px solid var(--line);
+          padding: 0;
+        }
+        .hero-step {
+          flex: 1;
+        }
+        .hero-step em {
+          float: none;
+          font-size: 30px;
+        }
+        .hero-step b {
+          font-size: 17px;
+        }
+        .hero-step span {
+          font-size: 14px;
+        }
+        .chain {
+          grid-template-columns: repeat(5, 1fr);
+          gap: 4px;
+        }
+        .chain button {
+          padding: 8px 2px;
+          min-height: 88px;
+        }
+        .chain button b {
+          font-size: 14px;
+        }
+        .case-grid aside,
+        .selection {
+          padding: 20px 0 0;
+          border-left: 0;
+          border-top: 1px solid var(--line);
+        }
+        .tool-layout {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        .tool-menu {
+          grid-template-columns: 1fr 1fr;
+        }
+        .tool-menu button {
+          font-size: 14px;
+        }
+        .timeline {
+          grid-template-columns: 1fr 1fr;
+        }
+        .weights span {
+          font-size: 11px;
+        }
+        .weights strong {
+          font-size: 24px;
+        }
+        .weights div {
+          padding: 10px 5px;
+        }
+        .lead {
+          font-size: 20px;
+        }
+        .ref {
+          font-size: 16px;
+        }
+        .index-grid {
+          grid-template-columns: 1fr;
+        }
+        footer {
+          padding: 0 15px;
+        }
+        .route button {
+          grid-template-columns: 40px 1fr;
+          gap: 15px;
+        }
+        .route .num {
+          font-size: 33px;
+        }
+        #sectionLabel {
+          max-width: 100px;
+          font-size: 12px;
+        }
+        .table-wrap {
+          overflow: auto;
+        }
+        .matrix {
+          gap: 10px;
+        }
+        .matrix button {
+          padding: 12px;
+        }
+        .matrix button small {
+          font-size: 13px;
+        }
+        .totals {
+          gap: 25px;
+        }
+        .reflection {
+          font-size: 27px;
+        }
+        .quiz-question {
+          font-size: 28px;
+        }
+      }
+      body {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+      header {
+        height: 56px;
+        flex-shrink: 0;
+      }
+      .progress {
+        flex-shrink: 0;
+      }
+      main {
+        width: 100%;
+        min-height: 0;
+        flex: 1;
+        overflow: auto;
+        padding-top: 28px;
+        padding-bottom: 20px;
+      }
+      footer {
+        height: 60px;
+        flex-shrink: 0;
+        background: var(--paper);
+      }
+      h1 {
+        font-size: clamp(45px, 5.2vw, 70px);
+      }
+      h2 {
+        font-size: clamp(32px, 3.2vw, 44px);
+      }
+      .eyebrow {
+        margin-bottom: 14px;
+      }
+      .hero {
+        min-height: 450px;
+      }
+      .cost-row {
+        margin: 11px 0;
+      }
+      .hero .deck-meta {
+        margin-top: 20px;
+      }
+      @media (max-width: 600px) {
+        header .brand {
+          max-width: 100px;
+          font-size: 11px;
+        }
+        header button {
+          font-size: 11px;
+          padding: 7px 8px;
+        }
+        header {
+          gap: 12px;
+        }
+        footer #sectionLabel {
+          display: none;
+        }
+        footer .nav {
+          width: 100%;
+          justify-content: space-between;
+          gap: 5px;
+        }
+        footer button {
+          font-size: 12px;
+          padding: 8px 10px;
+        }
+        footer .count {
+          min-width: 44px;
+          font-size: 12px;
+        }
+        .weights span {
+          font-size: 10px;
+        }
+        .hero-steps {
+          gap: 12px;
+        }
+        .hero-step span {
+          font-size: 12px;
+        }
+        .hero-step b {
+          font-size: 15px;
+        }
+      }
+      @media print {
+        header,
+        footer,
+        .progress,
+        .tabs,
+        .tool-menu,
+        .chain,
+        button {
+          display: none !important;
+        }
+        main {
+          padding: 15px;
+          overflow: visible;
+        }
+        .slide {
+          animation: none;
+          page-break-after: always;
+        }
+        body {
+          background: white;
+          color: #163b48;
+          display: block;
+          height: auto;
+          overflow: visible;
+        }
+        .refs a {
+          color: #163b48;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">PENSAMIENTO ESTRATÉGICO</div>
+      <div class="tools">
+        <button id="menuBtn" aria-label="Abrir índice">Índice</button
+        ><button id="motionBtn" aria-pressed="true" class="hide-small">
+          Animación: sí</button
+        ><button id="fullBtn">Pantalla completa</button>
+      </div>
+    </header>
+    <div class="progress" aria-hidden="true"><div id="progress"></div></div>
+    <main id="main" tabindex="-1"></main>
+    <footer>
+      <div id="sectionLabel"></div>
+      <div class="nav">
+        <button id="notesBtn">Guion</button
+        ><button id="prevBtn" aria-label="Diapositiva anterior">Anterior</button
+        ><span class="count" id="count" aria-live="polite"></span
+        ><button
+          id="nextBtn"
+          class="primary"
+          aria-label="Diapositiva siguiente"
+        >
+          Siguiente
+        </button>
+      </div>
+    </footer>
+    <dialog id="menu">
+      <div class="dialog-head">
+        <h3>Recorrido de la presentación</h3>
+        <button data-close="menu">Cerrar</button>
+      </div>
+      <div id="index" class="index-grid"></div>
+    </dialog>
+    <dialog id="notes">
+      <div class="dialog-head">
+        <h3>Guion de exposición</h3>
+        <button data-close="notes">Cerrar</button>
+      </div>
+      <div id="notesBody"></div>
+    </dialog>
+    <script id="content-data" type="application/json">
+      {
+        "title": "Planear es anticiparse al futuro",
+        "subtitle": "Cómo las organizaciones analizan su entorno y definen estrategias para avanzar",
+        "author": "Iván Leonardo Sosa Munévar",
+        "date": "29 de octubre de 2026",
+        "questions": [
+          "¿Cómo orientar la planeación estratégica para que la misión y la visión se traduzcan en objetivos concretos y alcanzables?",
+          "¿Cómo contribuyen las herramientas de formulación estratégica a elegir estrategias pertinentes para la organización?",
+          "¿Cómo priorizar las estrategias cuando los recursos disponibles son limitados y existen distintas necesidades organizacionales?"
+        ],
+        "central": "Una organización avanza cuando conecta lo que quiere ser con las decisiones que puede sostener. Para ello necesita conocer su realidad, acordar resultados y revisar lo que ocurre en la práctica.",
+        "mission": [
+          {
+            "title": "Misión",
+            "text": "Aclara para quién existe la organización y qué necesidad atiende."
+          },
+          {
+            "title": "Visión",
+            "text": "Describe el futuro al que aspira y orienta sus decisiones."
+          },
+          {
+            "title": "Valores",
+            "text": "Definen cómo actuar y qué límites respetar al buscar resultados."
+          },
+          {
+            "title": "Objetivos",
+            "text": "Precisan el cambio esperado, su medida y el plazo."
+          },
+          {
+            "title": "Ejecución",
+            "text": "Asigna iniciativas, responsables y recursos. El seguimiento permite ajustar."
+          }
+        ],
+        "q1": "La misión y la visión orientan objetivos alcanzables cuando el equipo identifica una necesidad concreta, establece una línea base y acuerda una meta compatible con sus capacidades. Después debe asignar responsables y recursos, medir avances y corregir a tiempo. Dicho esto, una cifra exigente solo tiene sentido si existe una ruta para alcanzarla.",
+        "example": {
+          "name": "Conecta, organización ficticia de servicios en Colombia",
+          "mission": "Facilitar servicios oportunos y cercanos a las personas.",
+          "vision": "Ser reconocida en 2028 por un servicio confiable y accesible.",
+          "objective": "Elevar del 82 % al 94 % las solicitudes resueltas dentro de 48 horas, entre noviembre de 2026 y abril de 2027, con seguimiento mensual de la coordinación de operaciones.",
+          "baseline": 82,
+          "target": 94,
+          "metric": "Solicitudes cuyo plazo de 48 horas venció en el periodo y que se resolvieron dentro de ese plazo ÷ total de solicitudes cuyo plazo de 48 horas venció en el periodo × 100. Las pendientes vencidas cuentan como incumplidas.",
+          "baselineDate": "Octubre de 2026, línea base ficticia",
+          "resources": "Hasta COP 60 millones y capacidad para dos iniciativas simultáneas.",
+          "feasibility": "Validar carga de trabajo, causas de retraso y un piloto de cuatro semanas antes de confirmar la meta.",
+          "guardrail": "Mantener al menos 90 % de satisfacción y cumplir los controles de calidad. Metas didácticas, pendientes de validación.",
+          "note": "Todos los datos, costos, puntajes y metas del caso Conecta son supuestos académicos. No describen a las empresas estudiadas."
+        },
+        "cases": [
+          {
+            "name": "Avianca",
+            "scope": "Caso histórico: Avianca Holdings, informe 2019. Contexto adicional: comunicado 2025.",
+            "mission": "La formulación de 2019 se concentra en conectar Latinoamérica con el mundo y ampliar el valor del servicio.",
+            "vision": "Aspira a la preferencia de los viajeros mediante su gente, la tecnología y la experiencia.",
+            "values": "Seguridad, servicio con integridad, trabajo conjunto e innovación con impacto sostenible.",
+            "lesson": "La promesa de conexión exige observar acceso, confiabilidad y experiencia. La seguridad debe acompañar cualquier decisión de eficiencia.",
+            "indicator": "Indicadores propuestos para analizar el caso: puntualidad, satisfacción y cumplimiento de controles de seguridad.",
+            "caution": "En 2025, un comunicado vuelve a destacar la conexión regional y el acceso al transporte aéreo. No se presume que la declaración de 2019 siga vigente.",
+            "cite": "Avianca Holdings S. A. (2019, pp. 20–21, 233); Avianca (2025).",
+            "refs": ["avianca19", "avianca25"]
+          },
+          {
+            "name": "Coca-Cola FEMSA",
+            "scope": "Se analiza Coca-Cola FEMSA, entidad del enlace suministrado.",
+            "mission": "Atender con excelencia a quienes consumen bebidas.",
+            "vision": "Ser una plataforma comercial preferida por clientes y socios, apoyando su crecimiento y un futuro sostenible.",
+            "values": "La web usa el término principios: prioridad al cliente, valoración de las personas, conducta correcta, aprendizaje, seguridad psicológica, excelencia, innovación, agilidad y resultados, entre otros.",
+            "lesson": "La excelencia puede traducirse en disponibilidad del producto y atención al cliente, junto con uso responsable de recursos.",
+            "indicator": "Indicadores propuestos: pedidos completos y a tiempo, satisfacción del cliente y consumo de agua por unidad producida.",
+            "caution": "Estos indicadores son propuestas académicas. No se atribuyen metas numéricas oficiales a la compañía.",
+            "cite": "Coca-Cola FEMSA (s. f.-a, s. f.-b).",
+            "refs": ["kofPrincipios", "kofMision"]
+          },
+          {
+            "name": "GE Vernova",
+            "scope": "El enlace GEvalues conduce a GE Vernova. Se estudia esta entidad.",
+            "mission": "Impulsar la electrificación y la descarbonización del mundo.",
+            "vision": "La página consultada presenta misión y propósito. No identifica una declaración separada titulada visión.",
+            "values": "Su forma de trabajar reúne innovación, orientación al cliente, mejora continua (lean), un solo equipo y responsabilidad por los compromisos.",
+            "lesson": "La ambición energética requiere decisiones que relacionen desempeño técnico con efectos ambientales.",
+            "indicator": "Indicadores propuestos: intensidad de emisiones, confiabilidad de equipos y cumplimiento de compromisos de entrega.",
+            "caution": "No se confunden estos principios con los valores históricos de General Electric. Traducción y síntesis propias del contenido en inglés.",
+            "cite": "GE Vernova (s. f.-a, s. f.-b).",
+            "refs": ["geCulture", "geMission"]
+          },
+          {
+            "name": "McDonald’s / Arcos Dorados",
+            "scope": "Misión en la web colombiana y visión/valores de la ficha regional del primer trimestre de 2023.",
+            "mission": "Ofrecer comida de calidad y experiencias agradables que resulten accesibles.",
+            "vision": "La ficha de 2023 propone reconocimiento por la experiencia cotidiana en los restaurantes y por el valor generado para su gente.",
+            "values": "Calidad y limpieza, orientación a resultados, trabajo en equipo, inclusión, ética y contribución a las comunidades.",
+            "lesson": "La experiencia del cliente depende de procesos repetibles y de las condiciones en que trabaja el equipo.",
+            "indicator": "Indicadores propuestos: tiempo de atención, satisfacción y cumplimiento de calidad e inocuidad.",
+            "caution": "La visión y los valores se presentan con su fecha documental, sin afirmar que la ficha de 2023 sea la última versión disponible.",
+            "cite": "McDonald’s Colombia (s. f.); Arcos Dorados (2023).",
+            "refs": ["mc", "arcos"]
+          }
+        ],
+        "responsibility": "Desde lo planteado por Argandoña (2016), la misión expresa compromisos con personas y grupos de interés. Aquí aparece una dificultad: una meta puede mejorar un resultado y afectar otro. El equipo necesita revisar los efectos sobre trabajadores, clientes y comunidad antes de aprobarla.",
+        "guggenheim": "El Plan Estratégico 2024–2025 del Museo Guggenheim Bilbao relaciona su misión cultural con una experiencia centrada en el visitante. El museo explica que redujo el horizonte de planificación frente a la incertidumbre. La lección para este ejercicio es revisar los plazos y las prioridades cuando cambian las condiciones. Se analiza un plan histórico, sin afirmar su vigencia en 2026.",
+        "tools": [
+          {
+            "name": "Entorno y PESTEL",
+            "question": "¿Qué está cambiando fuera?",
+            "text": "Organiza señales políticas, económicas, sociales, tecnológicas, ambientales y legales. Conviene registrar evidencia, fecha e implicación para el negocio.",
+            "example": "Conecta: comprobar si los usuarios necesitan más canales digitales, sin asumir que todos pueden usarlos."
+          },
+          {
+            "name": "Capacidades y EFI/EFE",
+            "question": "¿Con qué contamos y cómo respondemos?",
+            "text": "La EFI sintetiza fortalezas y debilidades. La EFE organiza factores externos y evalúa la respuesta de la organización. Requieren factores sustentados y pesos explícitos.",
+            "example": "Conecta: revisar personal disponible, tiempos de proceso y causas reales de retraso."
+          },
+          {
+            "name": "DOFA cruzada",
+            "question": "¿Qué alternativas se desprenden del diagnóstico?",
+            "text": "Relaciona fortalezas y debilidades con oportunidades y amenazas para formular opciones FO, DO, FA y DA.",
+            "example": "Una debilidad en programación, frente a la oportunidad de atención digital, sugiere un piloto de agenda y seguimiento."
+          },
+          {
+            "name": "BCG y GE–McKinsey",
+            "question": "¿Dónde concentrar esfuerzos de portafolio?",
+            "text": "BCG compara crecimiento y participación relativa. GE–McKinsey combina atractivo del sector con fortaleza competitiva mediante varios factores.",
+            "example": "Útiles cuando hay productos o unidades comparables. Una matriz de portafolio no sustituye el análisis de una iniciativa puntual."
+          },
+          {
+            "name": "MPEC",
+            "question": "¿Cuál alternativa responde mejor a los factores clave?",
+            "text": "La matriz de planeación estratégica cuantitativa compara el atractivo de estrategias frente a factores ponderados. Sus resultados dependen de la calidad de los juicios.",
+            "example": "La matriz multicriterio del ejercicio siguiente es una simplificación didáctica, no una MPEC completa."
+          },
+          {
+            "name": "Escenarios",
+            "question": "¿Qué pasaría si cambian nuestros supuestos?",
+            "text": "Compara futuros plausibles y permite revisar qué acciones conservan utilidad bajo condiciones diferentes.",
+            "example": "Conecta: demanda estable, aumento de solicitudes o interrupción del canal digital. Cada escenario exige una respuesta posible."
+          }
+        ],
+        "q2": "Las herramientas ayudan a elegir estrategias pertinentes porque convierten información dispersa en criterios de decisión. Su aporte aparece al relacionar el entorno con las capacidades y contrastar alternativas. A la luz del contexto, una matriz también exige conversación: quién aportó la evidencia, qué se supuso y qué dato podría cambiar la elección.",
+        "dofa": [
+          {
+            "code": "FO",
+            "name": "Aprovechar",
+            "factors": "Fortaleza: equipo experimentado. Oportunidad: alianzas locales.",
+            "strategy": "Probar una atención coordinada con aliados en una zona piloto."
+          },
+          {
+            "code": "DO",
+            "name": "Corregir",
+            "factors": "Debilidad: agenda manual. Oportunidad: herramientas digitales accesibles.",
+            "strategy": "Probar programación y seguimiento antes de ampliar la inversión."
+          },
+          {
+            "code": "FA",
+            "name": "Proteger",
+            "factors": "Fortaleza: relación cercana con usuarios. Amenaza: nuevos competidores.",
+            "strategy": "Mejorar la resolución de solicitudes y comprobar la satisfacción."
+          },
+          {
+            "code": "DA",
+            "name": "Reducir exposición",
+            "factors": "Debilidad: capacidad limitada. Amenaza: aumento brusco de demanda.",
+            "strategy": "Definir contingencias y posponer expansión hasta estabilizar el servicio."
+          }
+        ],
+        "criteria": [
+          { "name": "Alineación", "weight": 0.35 },
+          { "name": "Impacto esperado", "weight": 0.3 },
+          { "name": "Viabilidad", "weight": 0.2 },
+          { "name": "Urgencia", "weight": 0.15 }
+        ],
+        "projects": [
+          {
+            "id": "A",
+            "name": "Programación y seguimiento",
+            "cost": 30,
+            "scores": [5, 4, 4, 4],
+            "total": 4.35
+          },
+          {
+            "id": "B",
+            "name": "Formación del equipo",
+            "cost": 20,
+            "scores": [4, 3, 5, 3],
+            "total": 3.75
+          },
+          {
+            "id": "C",
+            "name": "Plataforma integral",
+            "cost": 70,
+            "scores": [5, 5, 3, 4],
+            "total": 4.45
+          },
+          {
+            "id": "D",
+            "name": "Expansión de sedes",
+            "cost": 80,
+            "scores": [3, 4, 2, 2],
+            "total": 2.95
+          }
+        ],
+        "q3": "Priorizar implica explicar qué se atenderá primero y qué se pospondrá. Primero se separan las obligaciones de seguridad, calidad y cumplimiento. Luego se comparan las opciones elegibles por su aporte, costo, riesgo y capacidad requerida. La selección final debe caber en el presupuesto y en la carga de trabajo del equipo.",
+        "budgetRules": "Simulación de elaboración propia: presupuesto variable entre COP 20 y 120 millones, máximo dos iniciativas, costos únicos completos, iniciativas independientes y puntajes aditivos. Se elige la combinación con mayor suma de puntajes dentro del límite. En empate, se prefiere menor costo. Estos supuestos simplifican la realidad: hay que validar dependencias, beneficios compartidos y costos recurrentes antes de decidir.",
+        "budgetLesson": "Con COP 60 millones, A y B usan 50 y suman 8,10 puntos. C tiene el mayor puntaje individual, pero cuesta 70. Con COP 90 millones, B y C suman 8,20. Con COP 100 millones, A y C alcanzan 8,80. Los puntos comparan preferencias dentro del ejercicio, no equivalen a rentabilidad ni garantizan el logro del objetivo.",
+        "implementation": [
+          {
+            "when": "Semanas 1–2",
+            "action": "Validar línea base, demanda y capacidad.",
+            "owner": "Coordinación de operaciones"
+          },
+          {
+            "when": "Semanas 3–6",
+            "action": "Probar programación y formación con un equipo.",
+            "owner": "Líder del piloto y talento humano"
+          },
+          {
+            "when": "Semana 7 al mes 5",
+            "action": "Ampliar solo si el piloto mejora tiempos sin deteriorar calidad.",
+            "owner": "Operaciones y dirección"
+          },
+          {
+            "when": "Mes 6",
+            "action": "Comparar el resultado con la meta y decidir ajustes.",
+            "owner": "Comité de seguimiento"
+          }
+        ],
+        "followup": "Revisión mensual: indicador de oportunidad, satisfacción, gasto acumulado y carga del equipo. Si la oportunidad queda por debajo del hito acordado durante dos cortes, investigar causas y ajustar alcance o recursos. Una contingencia de calidad o seguridad exige atención inmediata.",
+        "quizzes": [
+          {
+            "q": "¿Qué convierte una intención en un objetivo verificable?",
+            "answers": [
+              "Pedir que el servicio sea excelente.",
+              "Acordar una línea base, una meta, un plazo y un responsable.",
+              "Aumentar todas las actividades al mismo tiempo."
+            ],
+            "correct": 1,
+            "feedback": "La segunda opción permite comprobar el cambio. Aun así, el equipo debe validar recursos y factibilidad."
+          },
+          {
+            "q": "La DOFA muestra una debilidad relevante. ¿Qué sigue?",
+            "answers": [
+              "Cruzarla con el entorno y formular una alternativa sustentada.",
+              "Repetir el diagnóstico en una lista más larga.",
+              "Elegir la estrategia usada por otra empresa."
+            ],
+            "correct": 0,
+            "feedback": "El cruce convierte el diagnóstico en una opción que debe evaluarse. La matriz por sí sola no ejecuta la estrategia."
+          },
+          {
+            "q": "C obtiene el puntaje más alto y cuesta COP 70 millones. Hay 60 disponibles. ¿Qué conviene?",
+            "answers": [
+              "Aprobar C porque quedó primera.",
+              "Dividir su costo sin revisar si puede ejecutarse por etapas.",
+              "Comparar combinaciones viables y justificar qué se pospone."
+            ],
+            "correct": 2,
+            "feedback": "La tercera opción incorpora la restricción. Si se propone una fase de C, hay que volver a estimar su alcance, costo y aporte."
+          }
+        ],
+        "closing": "Desde esta lectura, anticiparse al futuro implica asumir decisiones en el presente y mantener abierta la posibilidad de corregirlas. La misión da sentido. El diagnóstico ayuda a elegir. Los recursos obligan a priorizar. El seguimiento permite aprender de lo que realmente ocurre.",
+        "reflection": "Si mañana tu organización perdiera el 20 % de su presupuesto, ¿qué compromiso de su misión protegerías y qué iniciativa revisarías primero?",
+        "scope": "Se consultó el capítulo 2, Planeación estratégica, del libro enlazado de Soto. No se adjuntó un documento independiente titulado Formulación Estratégica. Las obras de Díez et al. (2001) y Gallardo (2012) aparecen referidas por Soto y se tratan como citas secundarias, sin afirmar lectura directa. La autoría y fecha de Argandoña (2016) sustituyen la atribución genérica a IESE. El libro de Fred R. David se cita por apellido: David (2008).",
+        "secondary": "La relación entre razón de ser, futuro deseado y objetivos se aborda en Díez et al. (2001, como se citó en Soto, s. f., pp. 31–32) y Gallardo (2012, como se citó en Soto, s. f., pp. 31, 38). En las referencias se incluye la fuente efectivamente consultada: Soto.",
+        "refs": [
+          {
+            "id": "argandona",
+            "author": "Argandoña, A.",
+            "date": "2016",
+            "title": "La misión de la empresa y la responsabilidad social (Cuaderno n.º 29)",
+            "publisher": "IESE Business School, Universidad de Navarra.",
+            "url": "https://www.iese.edu/media/research/pdfs/ST-0392.pdf"
+          },
+          {
+            "id": "arcos",
+            "author": "Arcos Dorados.",
+            "date": "2023",
+            "title": "Fact sheet: Q1 2023 [Ficha corporativa]",
+            "publisher": "",
+            "url": "https://www.arcosdorados.com/wp-content/uploads/2015/12/Fact-Sheet-Q1-2023-REGIONAL.pdf"
+          },
+          {
+            "id": "avianca25",
+            "author": "Avianca.",
+            "date": "2025, 11 de noviembre",
+            "title": "Avianca anuncia cambios en su liderazgo. Gabriel Oliva es nombrado Presidente del Grupo Avianca",
+            "publisher": "",
+            "url": "https://www.avianca.com/es/sobre-nosotros/noticias-corporativas/2025/noviembre-11-2"
+          },
+          {
+            "id": "avianca19",
+            "author": "Avianca Holdings S. A.",
+            "date": "2019",
+            "title": "Informe anual 2019",
+            "publisher": "",
+            "url": "https://static.avianca.com/media/1237/informe-de-sostenibilidad-2019.pdf"
+          },
+          {
+            "id": "kofPrincipios",
+            "author": "Coca-Cola FEMSA.",
+            "date": "s. f.-a",
+            "title": "Principios Coca-Cola FEMSA",
+            "publisher": "Recuperado el 29 de octubre de 2026, de",
+            "url": "https://coca-colafemsa.com/sobre-nosotros/principios-kof.html"
+          },
+          {
+            "id": "kofMision",
+            "author": "Coca-Cola FEMSA.",
+            "date": "s. f.-b",
+            "title": "Propósito, misión y visión",
+            "publisher": "Recuperado el 29 de octubre de 2026, de",
+            "url": "https://coca-colafemsa.com/sobre-nosotros/proposito.html"
+          },
+          {
+            "id": "david",
+            "author": "David, F. R.",
+            "date": "2008",
+            "title": "Conceptos de administración estratégica (11.ª ed.)",
+            "publisher": "Pearson Educación.",
+            "url": "https://biblioteca.escuelaisam.edu.pe/assets/uploads/libro_689bb50eb46b7.pdf"
+          },
+          {
+            "id": "geCulture",
+            "author": "GE Vernova.",
+            "date": "s. f.-a",
+            "title": "Life at GE Vernova",
+            "publisher": "Recuperado el 29 de octubre de 2026, de",
+            "url": "https://careers.gevernova.com/life-at-ge-vernova/page/109"
+          },
+          {
+            "id": "geMission",
+            "author": "GE Vernova.",
+            "date": "s. f.-b",
+            "title": "Mission statement",
+            "publisher": "Recuperado el 29 de octubre de 2026, de",
+            "url": "https://www.gevernova.com/company/about"
+          },
+          {
+            "id": "mc",
+            "author": "McDonald’s Colombia.",
+            "date": "s. f.",
+            "title": "Quiénes somos: Arcos Dorados",
+            "publisher": "Recuperado el 29 de octubre de 2026, de",
+            "url": "https://www.mcdonalds.com.co/quienes-somos"
+          },
+          {
+            "id": "gugg",
+            "author": "Museo Guggenheim Bilbao.",
+            "date": "s. f.",
+            "title": "Plan estratégico",
+            "publisher": "Recuperado el 29 de octubre de 2026, de",
+            "url": "https://www.guggenheim-bilbao.eus/acerca-del-museo/plan-estrategico"
+          },
+          {
+            "id": "soto",
+            "author": "Soto, R. S.",
+            "date": "s. f.",
+            "title": "Pensamiento estratégico y prospectiva",
+            "publisher": "Universidad Santo Tomás.",
+            "url": "https://online.fliphtml5.com/xben/yngv/"
+          }
+        ]
+      }
+    </script>
+    <script>
+      "use strict";
+      const D = JSON.parse(document.getElementById("content-data").textContent);
+      const $ = (id) => document.getElementById(id),
+        esc = (s) =>
+          String(s).replace(
+            /[&<>"']/g,
+            (c) =>
+              ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;",
+              })[c],
+          );
+      const ref = (id) => D.refs.find((r) => r.id === id);
+      const apaTitle = (t) => {
+        const suffix = t.match(/\s(\([^)]*\)|\[[^\]]*\])$/)?.[0] || "";
+        return `<i>${esc(suffix ? t.slice(0, -suffix.length) : t)}</i>${esc(suffix)}`;
+      };
+      const cite = (ids, label) =>
+        `<div class="source">${esc(label || "Fuentes: ")} ${ids.map((id) => `<a href="${esc(ref(id).url)}" target="_blank" rel="noopener noreferrer">${esc(ref(id).author)} (${esc(ref(id).date)})</a>`).join(" · ")}</div>`;
+      const note = (text) => `<div class="notice">${text}</div>`;
+      const heading = (k, t) => `<p class="eyebrow">${k}</p><h2>${t}</h2>`;
+      let state = {
+        slide: 0,
+        chain: 0,
+        case: 0,
+        tool: 0,
+        dofa: 1,
+        scenario: 0,
+        budget: 60,
+        quiz: 0,
+        answers: [null, null, null],
+      };
+      const scenarios = [
+        {
+          title: "Demanda estable",
+          signal: "La carga se mantiene",
+          observation:
+            "El volumen de solicitudes sigue dentro de la capacidad estimada.",
+          response:
+            "Probar programación y formación. Revisar tiempos y calidad antes de ampliar.",
+          trigger:
+            "Se revisa la decisión si el volumen o la complejidad dejan de coincidir con la línea base.",
+        },
+        {
+          title: "Más solicitudes",
+          signal: "La demanda aumenta",
+          observation:
+            "El equipo recibe más trabajo del que puede resolver en el plazo previsto.",
+          response:
+            "Revisar turnos y alcance. Comparar capacidad adicional con mejoras de proceso.",
+          trigger:
+            "La carga supera el umbral operativo acordado durante dos semanas. El umbral debe medirse, no adivinarse.",
+        },
+        {
+          title: "Falla digital",
+          signal: "El canal se interrumpe",
+          observation:
+            "La organización pierde temporalmente acceso a su herramienta de atención.",
+          response:
+            "Activar el procedimiento de contingencia y conservar un registro seguro de solicitudes.",
+          trigger:
+            "Una caída del servicio activa el protocolo definido. La continuidad debe comprobarse antes de depender de la plataforma.",
+        },
+      ];
+      const slides = [
+        {
+          title: "Planear es anticiparse al futuro",
+          section: "Apertura",
+          render: () =>
+            `<div class="hero"><div><p class="eyebrow">Planeación estratégica</p><h1>Planear es<br>anticiparse<br>al futuro</h1><p class="lead">${D.subtitle}.</p><button class="primary" data-go="1">Explorar el recorrido</button><p class="deck-meta">${D.author}<br>Natalia Andrea Lopez Hernandez<br>${D.date}</p></div><div class="hero-steps"><div class="hero-step"><em>01</em><b>Dar dirección</b><span>Misión, visión y objetivos</span></div><div class="hero-step"><em>02</em><b>Elegir con evidencia</b><span>Entorno y capacidades</span></div><div class="hero-step"><em>03</em><b>Decidir qué va primero</b><span>Recursos y seguimiento</span></div></div></div>`,
+          notes:
+            D.central +
+            " Imaginemos una organización que conoce el futuro que desea, pero todavía debe decidir qué hará mañana. Ese es el problema que orienta este recorrido.",
+        },
+        {
+          title: "Tres preguntas para orientar las decisiones",
+          section: "Recorrido",
+          render: () =>
+            heading(
+              "El punto de partida",
+              "Tres preguntas para orientar las decisiones",
+            ) +
+            `<div class="route">${D.questions.map((q, i) => `<button data-go="${[2, 7, 11][i]}"><span class="num">0${i + 1}</span><span><b>${["Objetivos alcanzables", "Estrategias pertinentes", "Prioridades sostenibles"][i]}</b><small>${q}</small></span></button>`).join("")}</div><p class="small muted" style="margin-top:20px">Cada recorrido incluye una explicación y una actividad. Puedes avanzar con los botones o con las flechas del teclado.</p>`,
+          notes: D.central,
+        },
+        {
+          title: "La misión toma forma en las decisiones",
+          section: "Pregunta 1 · Dirección",
+          render: () =>
+            heading("Pregunta 1", "La misión toma forma en las decisiones") +
+            `<p class="lead">${D.q1}</p><div class="chain" role="tablist" aria-label="Relación entre propósito y ejecución">${D.mission.map((m, i) => `<button role="tab" aria-selected="${state.chain === i}" data-chain="${i}" class="${state.chain === i ? "active" : ""}"><span>0${i + 1}</span><b>${m.title}</b></button>`).join("")}</div><div class="reveal" role="tabpanel"><h3>${D.mission[state.chain].title}</h3><p>${D.mission[state.chain].text}</p></div>` +
+            cite(["soto", "argandona"], "Base conceptual: "),
+          notes:
+            D.questions[0] +
+            " " +
+            D.secondary +
+            " La participación del equipo ayuda a descubrir qué compromisos son realistas y qué decisiones requieren recursos adicionales.",
+        },
+        {
+          title: "Una meta que se puede comprobar",
+          section: "Pregunta 1 · Aplicación",
+          render: () =>
+            heading(
+              "Caso Conecta · Datos ficticios",
+              "Una meta que se puede comprobar",
+            ) +
+            `<div class="split wide-left"><div><p class="lead">${D.example.objective}</p><details><summary>¿Cómo se calcula el indicador?</summary><p>${D.example.metric}</p></details><details><summary>¿Es alcanzable?</summary><p>${D.example.feasibility}</p></details><details><summary>¿Qué se debe proteger?</summary><p>${D.example.guardrail}</p></details></div><div><div class="bars" role="img" aria-label="Línea base ficticia 82 por ciento. Meta propuesta 94 por ciento. Mejora de 12 puntos porcentuales."><div class="barrow"><div class="barlabel"><span>Línea base · octubre de 2026</span><b>82 %</b></div><div class="track"><div class="bar" style="--value:82%"></div></div></div><div class="barrow"><div class="barlabel"><span>Meta · abril de 2027</span><b>94 %</b></div><div class="track"><div class="bar target" style="--value:94%"></div></div></div><div class="axis"><span>0 %</span><span>50 %</span><span>100 %</span></div></div><div class="stat">+12</div><p>puntos porcentuales de mejora propuesta</p></div></div>` +
+            note(D.example.note) +
+            cite(["david"], "Criterios de objetivos: "),
+          notes: `${D.example.name}. Misión propuesta: ${D.example.mission} Visión propuesta: ${D.example.vision} ${D.example.resources} ${D.example.feasibility} El gráfico compara una línea base con una meta. No muestra resultados obtenidos.`,
+        },
+        {
+          title: "Las declaraciones marcan prioridades distintas",
+          section: "Pregunta 1 · Casos",
+          render: () => {
+            const c = D.cases[state.case];
+            return (
+              heading(
+                "Casos organizacionales",
+                "Las declaraciones marcan prioridades distintas",
+              ) +
+              `<div class="tabs" role="tablist" aria-label="Empresas">${D.cases.map((v, i) => `<button role="tab" aria-selected="${state.case === i}" data-case="${i}">${v.name}</button>`).join("")}</div><div class="case-grid" role="tabpanel"><div class="declaration"><div><b>MISIÓN · SÍNTESIS</b><p>${c.mission}</p></div><div><b>VISIÓN · ALCANCE DOCUMENTAL</b><p>${c.vision}</p></div><div><b>VALORES O PRINCIPIOS · SÍNTESIS</b><p>${c.values}</p></div></div><aside><h3>¿Qué implica para la planeación?</h3><p>${c.lesson}</p><p>${c.indicator}</p><p class="small muted">${c.scope}</p><p class="small muted">${c.caution}</p></aside></div>` +
+              cite(c.refs, "Fuentes del caso: ")
+            );
+          },
+          notes: () => {
+            const c = D.cases[state.case];
+            return (
+              c.scope +
+              " " +
+              c.lesson +
+              " " +
+              c.caution +
+              " Los indicadores propuestos sirven para discutir cómo convertir declaraciones en resultados verificables. No son metas oficiales de las empresas."
+            );
+          },
+        },
+        {
+          title: "Los valores también delimitan las metas",
+          section: "Pregunta 1 · Responsabilidad",
+          render: () =>
+            heading(
+              "Responsabilidad social",
+              "Los valores también delimitan las metas",
+            ) +
+            `<div class="split"><div><p class="lead">${D.responsibility}</p><div class="callout"><p>Si Conecta acelera la atención a costa de errores o sobrecarga del equipo, necesita revisar su estrategia.</p></div></div><div class="flat-list"><div><h3>Antes de aprobar</h3><p>¿Quién recibe el beneficio y quién asume el esfuerzo?</p></div><div><h3>Durante la ejecución</h3><p>¿Qué indicador permite detectar un deterioro de calidad o bienestar?</p></div><div><h3>Al revisar</h3><p>¿Qué decisiones muestran coherencia con la misión?</p></div></div></div>` +
+            cite(["argandona"]),
+          notes:
+            "La misión aporta un criterio para discutir el impacto de las decisiones. En el caso ficticio, el indicador de oportunidad debe leerse junto con satisfacción y calidad. Una mejora aislada puede ocultar costos para otras personas.",
+        },
+        {
+          title: "El horizonte del plan también se revisa",
+          section: "Caso complementario · Guggenheim",
+          render: () =>
+            heading(
+              "Museo Guggenheim Bilbao",
+              "El horizonte del plan también se revisa",
+            ) +
+            `<div class="split"><div><p class="lead">${D.guggenheim}</p></div><div class="flat-list"><div><div class="number">2024–2025</div><p class="small muted">Periodo del plan consultado</p></div><div><h3>Compromiso cultural</h3><p>Acceso al arte y experiencia del visitante.</p></div><div><h3>Aplicación al ejercicio</h3><p>Una revisión periódica permite ajustar acciones sin perder de vista el propósito.</p></div></div></div>` +
+            cite(["gugg"]),
+          notes:
+            "El plan reúne compromisos educativos, ambientales y de sostenibilidad económica. Esto permite observar que una organización necesita equilibrar resultados distintos. No se interpreta un objetivo de visitantes o ingresos como medida suficiente de toda su misión cultural.",
+        },
+        {
+          title: "Las herramientas organizan la decisión",
+          section: "Pregunta 2 · Formulación",
+          render: () =>
+            heading("Pregunta 2", "Las herramientas organizan la decisión") +
+            `<div class="tool-layout"><div class="tool-menu" role="tablist" aria-label="Herramientas de formulación">${D.tools.map((t, i) => `<button role="tab" aria-selected="${state.tool === i}" data-tool="${i}">${t.name}</button>`).join("")}</div><div class="tool-detail" role="tabpanel"><span class="tag">${D.tools[state.tool].question}</span><h3>${D.tools[state.tool].name}</h3><p class="lead">${D.tools[state.tool].text}</p><div class="callout"><p>${D.tools[state.tool].example}</p></div><div class="phase-row"><span><b>1.</b> Diagnosticar</span><span><b>2.</b> Generar opciones</span><span><b>3.</b> Comparar</span></div></div></div>` +
+            cite(["soto", "david"], "Herramientas de diagnóstico y elección: "),
+          notes:
+            D.questions[1] +
+            " " +
+            D.q2 +
+            " David (2008, pp. 219, 239–244) distingue la información de entrada, la generación de alternativas y la decisión. El análisis de escenarios amplía la discusión sobre incertidumbre.",
+        },
+        {
+          title: "La DOFA debe producir una alternativa",
+          section: "Pregunta 2 · Cruce estratégico",
+          render: () =>
+            heading(
+              "Caso Conecta · Supuestos de diagnóstico",
+              "La DOFA debe producir una alternativa",
+            ) +
+            `<div class="split wide-left"><div class="matrix">${D.dofa.map((d, i) => `<button class="${state.dofa === i ? "active" : ""}" data-dofa="${i}" aria-pressed="${state.dofa === i}"><strong>${d.code}</strong><b>${d.name}</b><small>${d.factors}</small></button>`).join("")}</div><div><div class="strategy-output"><p class="eyebrow">Alternativa ${D.dofa[state.dofa].code}</p><h3>${D.dofa[state.dofa].name}</h3><p>${D.dofa[state.dofa].strategy}</p></div><p class="small muted" style="margin-top:20px">Selecciona un cruce. Antes de aprobar la alternativa, hay que contrastarla con evidencia, costos y capacidad.</p></div></div>` +
+            cite(["soto"], "Cruces FO, DO, FA y DA: "),
+          notes:
+            "Estas fortalezas, debilidades, oportunidades y amenazas se proponen únicamente para el ejercicio. En una organización real deben sustentarse con registros, entrevistas y observación. Una conclusión atractiva pierde valor si parte de un diagnóstico supuesto.",
+        },
+        {
+          title: "Una estrategia frente a distintos futuros",
+          section: "Pregunta 2 · Incertidumbre",
+          render: () => {
+            const x = scenarios[state.scenario];
+            return (
+              heading(
+                "Escenarios de Conecta · Elaboración propia",
+                "Una estrategia frente a distintos futuros",
+              ) +
+              `<p class="lead">La decisión mejora cuando también se pregunta qué podría cambiar.</p><div class="scenario-controls">${scenarios.map((s, i) => `<button data-scenario="${i}" class="${state.scenario === i ? "active" : ""}" aria-pressed="${state.scenario === i}">${s.title}</button>`).join("")}</div><div class="scenario-detail"><div class="signal">${x.signal}</div><div class="flat-list"><div><h3>Señal que conviene observar</h3><p>${x.observation}</p></div><div><h3>Respuesta posible</h3><p>${x.response}</p></div><div><h3>Condición para revisar el plan</h3><p>${x.trigger}</p></div></div></div>` +
+              note(
+                "Los escenarios son posibilidades didácticas. No son pronósticos ni llevan probabilidades estimadas.",
+              )
+            );
+          },
+          notes:
+            "A la luz de la incertidumbre, conviene conservar acciones útiles en varias situaciones y definir qué señal exige cambiar de rumbo. El escenario ayuda a ensayar una respuesta antes de necesitarla. Cada condición de revisión debe acordarse con quienes conocen la operación.",
+        },
+        {
+          title: "Una elección explicable",
+          section: "Pregunta 2 · Reflexión",
+          render: () =>
+            heading(
+              "Respuesta a la segunda pregunta",
+              "Una elección explicable",
+            ) +
+            `<div class="split"><div><p class="lead">${D.q2}</p><div class="callout"><p>Una herramienta aporta cuando permite explicar por qué una alternativa responde mejor al problema.</p></div></div><div class="flat-list"><div><h3>Evidencia</h3><p>¿Qué dato sostiene el diagnóstico?</p></div><div><h3>Coherencia</h3><p>¿Cómo contribuye la estrategia al objetivo?</p></div><div><h3>Condiciones</h3><p>¿Qué capacidades necesita y qué podría hacerla fallar?</p></div></div></div>`,
+          notes:
+            "La comparación debe permitir disentir con argumentos. Un puntaje es útil para ordenar preferencias, pero necesita una explicación. Si un supuesto cambia, la organización debe poder reconstruir la decisión y revisar sus consecuencias.",
+        },
+        {
+          title: "Priorizar exige reconocer los límites",
+          section: "Pregunta 3 · Recursos",
+          render: () =>
+            heading("Pregunta 3", "Priorizar exige reconocer los límites") +
+            `<div class="split"><div><p class="lead">${D.q3}</p><div class="callout"><p>Posponer una iniciativa también es una decisión. Conviene dejar escrita la razón y la condición para reconsiderarla.</p></div></div><div class="flat-list"><div><h3>Obligaciones que se atienden primero</h3><p>Seguridad, cumplimiento y condiciones mínimas de calidad.</p></div><div><h3>Opciones que se comparan</h3><p>Aporte estratégico, impacto esperado, viabilidad y urgencia.</p></div><div><h3>Restricciones que se comprueban</h3><p>Presupuesto, disponibilidad del equipo y dependencias.</p></div></div></div>` +
+            cite(["argandona", "david"], "Fundamento y reflexión aplicada: "),
+          notes:
+            D.questions[2] +
+            " La priorización no debe convertir las obligaciones básicas en opciones que compiten por puntos. El ejercicio siguiente parte de iniciativas elegibles y de un presupuesto adicional. En una decisión real también se revisan mantenimiento, riesgos y costos futuros.",
+        },
+        {
+          title: "Los criterios quedan a la vista",
+          section: "Pregunta 3 · Matriz de priorización",
+          render: () =>
+            heading(
+              "Conecta · Matriz multicriterio didáctica",
+              "Los criterios quedan a la vista",
+            ) +
+            `<div class="weights" role="img" aria-label="Pesos: alineación 35 por ciento, impacto esperado 30, viabilidad 20 y urgencia 15">${D.criteria.map((c) => `<div><strong>${c.weight * 100} %</strong><span>${c.name}</span></div>`).join("")}</div><p class="small muted">Escala de 1 a 5: 1 = aporte o condición baja; 5 = alta. En viabilidad, 5 significa más fácil de ejecutar. Pesos y valoraciones ficticios.</p><div class="table-wrap"><table><thead><tr><th>Iniciativa</th><th class="num">Alineación</th><th class="num">Impacto</th><th class="num">Viabilidad</th><th class="num">Urgencia</th><th class="num">Total / 5</th></tr></thead><tbody>${D.projects.map((p) => `<tr><td><b>${p.id}</b> · ${p.name}</td>${p.scores.map((s) => `<td class="num">${s}</td>`).join("")}<td class="num scorecell">${num(p.total)}</td></tr>`).join("")}</tbody></table></div><p class="formula">A = (5 × 0,35) + (4 × 0,30) + (4 × 0,20) + (4 × 0,15) = 4,35</p><p class="small muted">Modelo de elaboración propia. Los pesos suman 100 %. Esta comparación simplificada no sustituye una MPEC completa ni estima rentabilidad.</p>`,
+          notes:
+            "La escala permite hacer visible la discusión. Por ejemplo, C tiene alto impacto esperado, pero requiere más esfuerzo de ejecución. Si la valoración de impacto de C pasa de 5 a 4, su total baja de 4,45 a 4,15 y A queda por encima. Esa sensibilidad invita a revisar la evidencia y evitar una falsa precisión.",
+        },
+        {
+          title: "¿Qué cabe en el presupuesto?",
+          section: "Pregunta 3 · Simulador",
+          render: () =>
+            heading(
+              "Conecta · Cambia el presupuesto",
+              "¿Qué cabe en el presupuesto?",
+            ) +
+            `<div class="simulator"><div><div class="budget-control"><label for="budget">Presupuesto disponible · millones de pesos colombianos</label><output id="budgetValue" for="budget">COP ${state.budget} millones</output><input id="budget" type="range" min="20" max="120" step="10" value="${state.budget}" aria-label="Presupuesto en millones de pesos colombianos"><div class="range-labels"><span>20</span><span>Máximo dos iniciativas</span><span>120</span></div></div><div id="costBars"></div><p class="small muted">Longitud de las barras: costo. Verde: selección recomendada por este modelo.</p></div><div class="selection" id="selection" aria-live="polite"></div></div><details><summary>Supuestos y límites del simulador</summary><p>${D.budgetRules}</p></details>`,
+          after: () => updateBudget(),
+          notes:
+            D.budgetLesson +
+            " El simulador enumera todas las combinaciones de hasta dos iniciativas. La opción con mayor puntaje individual no siempre cabe en los recursos disponibles. Tampoco conviene gastar el saldo solo para agotar el presupuesto.",
+        },
+        {
+          title: "La ejecución necesita responsables",
+          section: "Seguimiento",
+          render: () =>
+            heading(
+              "Conecta · Ruta de seis meses",
+              "La ejecución necesita responsables",
+            ) +
+            `<div class="timeline">${D.implementation.map((i) => `<div><h3>${i.when}</h3><p>${i.action}</p><span class="owner">Responsable: ${i.owner}</span></div>`).join("")}</div><div class="monitor"><div><h3>Lo que se revisa cada mes</h3><p>Oportunidad de atención, satisfacción, gasto acumulado y carga del equipo.</p></div><div><h3>Lo que puede cambiar</h3><p>Alcance, secuencia o recursos, según las causas del desvío y los compromisos de la misión.</p></div></div>` +
+            note(
+              "Cronograma propuesto para el caso ficticio. Las fechas, recursos y metas se confirman después del piloto.",
+            ),
+          notes:
+            D.followup +
+            " El comité debe acordar los hitos intermedios al validar la línea base. Un informe útil compara lo esperado con lo ocurrido y deja una decisión con responsable y fecha.",
+        },
+        {
+          title: "Tres decisiones para comprobar lo aprendido",
+          section: "Actividad final",
+          render: () => {
+            const q = D.quizzes[state.quiz],
+              selected = state.answers[state.quiz];
+            return (
+              heading(
+                "Actividad con retroalimentación",
+                "Tres decisiones para comprobar lo aprendido",
+              ) +
+              `<div class="quiz-nav">${D.quizzes.map((x, i) => `<button data-quiz="${i}" class="${state.quiz === i ? "active" : ""}">Pregunta ${i + 1}${state.answers[i] !== null ? " ✓" : ""}</button>`).join("")}</div><div class="quiz-grid"><div class="quiz-question">${q.q}</div><div><div class="answers">${q.answers.map((a, i) => `<button data-answer="${i}" aria-pressed="${selected === i}" class="${selected === i ? (i === q.correct ? "correct" : "incorrect") : ""}"><b>${String.fromCharCode(65 + i)}</b><span>${a}</span></button>`).join("")}</div><div class="feedback" aria-live="polite">${selected === null ? "Selecciona una respuesta para contrastar tu decisión." : `<b>${selected === q.correct ? "La decisión tiene fundamento." : "Conviene revisar esa decisión."}</b><p>${q.feedback}</p>`}</div></div></div>`
+            );
+          },
+          notes:
+            "La actividad busca explicar la decisión, no memorizar un término. Después de responder, podemos discutir qué evidencia haría cambiar la respuesta en una organización real.",
+        },
+        {
+          title: "La planeación se demuestra en la práctica",
+          section: "Reflexión de cierre",
+          render: () =>
+            heading(
+              "Reflexión de cierre",
+              "La planeación se demuestra en la práctica",
+            ) +
+            `<div class="closing"><p class="lead">${D.closing}</p><p class="reflection">${D.reflection}</p><div class="tabs"><button data-go="3">Revisar el objetivo</button><button data-go="8">Volver a la DOFA</button><button data-go="13">Probar otro presupuesto</button></div></div>`,
+          notes:
+            "La reflexión reúne las tres preguntas. El propósito se vuelve verificable mediante objetivos. El diagnóstico fundamenta alternativas. Las restricciones obligan a justificar la selección. La revisión sostiene la coherencia entre la intención y la práctica.",
+        },
+        ...[0, 1, 2].map((part) => ({
+          title: `Referencias APA 7 · ${part + 1} de 3`,
+          section: "Fuentes consultadas",
+          render: () =>
+            heading(
+              "Referencias · APA séptima edición",
+              `Fuentes consultadas ${part + 1} / 3`,
+            ) +
+            `<div class="refs">${D.refs
+              .slice(part * 4, part * 4 + 4)
+              .map(
+                (r) =>
+                  `<p class="ref">${r.author} (${r.date}). ${apaTitle(r.title)}. ${r.publisher}<a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.url)}</a></p>`,
+              )
+              .join("")}</div>`,
+          notes:
+            "Las referencias corresponden a las fuentes efectivamente consultadas. Las páginas sin fecha usan «s. f.». Las letras a y b distinguen obras del mismo autor y sin fecha, ordenadas por título.",
+        })),
+      ];
+      function num(v) {
+        return v.toFixed(2).replace(".", ",");
+      }
+      function solve(budget) {
+        let best = { cost: 0, score: 0, items: [] };
+        for (let mask = 0; mask < 1 << D.projects.length; mask++) {
+          const items = D.projects.filter((p, i) => mask & (1 << i));
+          if (items.length > 2) continue;
+          const cost = items.reduce((a, p) => a + p.cost, 0),
+            score = items.reduce((a, p) => a + p.total, 0);
+          if (
+            cost <= budget &&
+            (score > best.score + 1e-8 ||
+              (Math.abs(score - best.score) < 1e-8 && cost < best.cost))
+          )
+            best = { cost, score, items };
+        }
+        return best;
+      }
+      function updateBudget() {
+        const b = state.budget,
+          best = solve(b);
+        $("budgetValue").textContent = `COP ${b} millones`;
+        $("budget").setAttribute(
+          "aria-valuetext",
+          `${b} millones de pesos colombianos`,
+        );
+        $("costBars").innerHTML = D.projects
+          .map(
+            (p) =>
+              `<div class="cost-row ${best.items.includes(p) ? "selected" : ""}"><strong>${p.id}</strong><div><div class="cost-name">${p.name}</div><div class="track"><div class="bar" style="--value:${(p.cost / 80) * 100}%"></div></div></div><span>COP ${p.cost} M</span></div>`,
+          )
+          .join("");
+        $("selection").innerHTML =
+          `<span class="tag">Combinación que elige el modelo</span><h3>${best.items.map((p) => p.id).join(" + ") || "Sin selección"}</h3><p class="chosen">${best.items.map((p) => p.name).join(" y ")}</p><div class="totals"><div><strong>${best.cost}</strong><span>millones usados</span></div><div><strong>${b - best.cost}</strong><span>millones disponibles</span></div><div><strong>${num(best.score)}</strong><span>puntos conjuntos</span></div></div><p>${b < 70 ? "C tiene el puntaje individual más alto, pero sus 70 millones superan este presupuesto." : b === 90 ? "B y C caben exactamente. Su suma supera por 0,10 puntos a A y B. Esa diferencia exige revisar la calidad de las valoraciones." : b >= 100 ? "A y C ofrecen la mayor suma entre las combinaciones elegibles. El límite de dos iniciativas sigue activo." : "A y B tienen mayor puntaje conjunto que C por sí sola."}</p><p class="small muted">Los puntos representan preferencias dentro del ejercicio. No son beneficios financieros ni probabilidades de éxito.</p>`;
+      }
+      function draw(focus = false) {
+        const s = slides[state.slide];
+        $("main").innerHTML =
+          `<section class="slide" aria-label="${esc(s.title)}">${s.render()}</section>`;
+        $("sectionLabel").textContent = s.section;
+        $("count").textContent = `${state.slide + 1} / ${slides.length}`;
+        $("progress").style.width =
+          `${((state.slide + 1) / slides.length) * 100}%`;
+        $("prevBtn").disabled = state.slide === 0;
+        $("nextBtn").disabled = state.slide === slides.length - 1;
+        if (s.after) s.after();
+        if (focus) {
+          $("main").scrollTop = 0;
+          $("main").focus({ preventScroll: true });
+        }
+        document.title = `${s.title} · Planeación estratégica`;
+      }
+      function go(n) {
+        state.slide = Math.max(0, Math.min(slides.length - 1, n));
+        draw(true);
+      }
+      document.addEventListener("click", (event) => {
+        const b = event.target.closest("button");
+        if (!b) return;
+        const a = b.dataset;
+        if (a.go !== undefined) {
+          $("menu").close();
+          go(+a.go);
+        } else if (a.chain !== undefined) {
+          state.chain = +a.chain;
+          draw();
+        } else if (a.case !== undefined) {
+          state.case = +a.case;
+          draw();
+        } else if (a.tool !== undefined) {
+          state.tool = +a.tool;
+          draw();
+        } else if (a.dofa !== undefined) {
+          state.dofa = +a.dofa;
+          draw();
+        } else if (a.scenario !== undefined) {
+          state.scenario = +a.scenario;
+          draw();
+        } else if (a.quiz !== undefined) {
+          state.quiz = +a.quiz;
+          draw();
+        } else if (a.answer !== undefined) {
+          state.answers[state.quiz] = +a.answer;
+          draw();
+        } else if (a.close) {
+          $(a.close).close();
+        }
+      });
+      document.addEventListener("input", (e) => {
+        if (e.target.id === "budget") {
+          state.budget = +e.target.value;
+          updateBudget();
+        }
+      });
+      $("prevBtn").onclick = () => go(state.slide - 1);
+      $("nextBtn").onclick = () => go(state.slide + 1);
+      $("menuBtn").onclick = () => {
+        $("index").innerHTML = slides
+          .map(
+            (s, i) =>
+              `<button data-go="${i}" ${state.slide === i ? 'aria-current="page"' : ""}><span>${String(i + 1).padStart(2, "0")}</span>${s.title}</button>`,
+          )
+          .join("");
+        $("menu").showModal();
+      };
+      $("notesBtn").onclick = () => {
+        const s = slides[state.slide];
+        $("notesBody").innerHTML =
+          `<p>${typeof s.notes === "function" ? s.notes() : s.notes}</p>`;
+        $("notes").showModal();
+      };
+      $("motionBtn").onclick = () => {
+        const disabled = document.body.classList.toggle("no-motion");
+        $("motionBtn").textContent = `Animación: ${disabled ? "no" : "sí"}`;
+        $("motionBtn").setAttribute("aria-pressed", String(!disabled));
+      };
+      $("fullBtn").onclick = async () => {
+        try {
+          if (document.fullscreenElement) await document.exitFullscreen();
+          else await document.documentElement.requestFullscreen();
+        } catch (e) {
+          $("fullBtn").textContent = "Usa F11 para ampliar";
+        }
+      };
+      document.addEventListener("fullscreenchange", () => {
+        $("fullBtn").textContent = document.fullscreenElement
+          ? "Salir de pantalla completa"
+          : "Pantalla completa";
+      });
+      document.addEventListener("keydown", (e) => {
+        if (
+          document.querySelector("dialog[open]") ||
+          /INPUT|TEXTAREA|SELECT/.test(e.target.tagName)
+        )
+          return;
+        if (["ArrowRight", "PageDown"].includes(e.key)) {
+          e.preventDefault();
+          go(state.slide + 1);
+        }
+        if (["ArrowLeft", "PageUp"].includes(e.key)) {
+          e.preventDefault();
+          go(state.slide - 1);
+        }
+        if (e.key === "Home") {
+          e.preventDefault();
+          go(0);
+        }
+        if (e.key === "End") {
+          e.preventDefault();
+          go(slides.length - 1);
+        }
+      });
+      draw();
+    </script>
+  </body>
+</html>
